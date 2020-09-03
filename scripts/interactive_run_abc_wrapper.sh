@@ -120,9 +120,10 @@ python scripts/ABC-Enhancer-Gene-Prediction/src/predict.py --enhancers ${enhance
 # python -c "import sys; import pandas as pd; import datatable as dt; input_file=sys.argv[1]; outtxt_file=sys.argv[2]; bedpeDT = dt.fread(input_file, sep='\t', header=False, nthreads=16); bedpeDF = bedpeDT.to_pandas(); bedpeDF.insert(6, 'name', '.'); bedpeDF.to_csv(outtxt_file, header=False, index=False, sep='\t');" /media/rad/HDD1/hic/anja/tcelldev/results/hic_results/matrix/raw/TcellDev-HSC-HSPCtoTcell-Rep3_mm_hic_pe_70000.bedpe /media/rad/HDD1/hic/anja/tcelldev/results/hic_results/matrix/raw/TcellDev-HSC-HSPCtoTcell-Rep3_mm_hic_pe_70000.bedpe.tmp && mv /media/rad/HDD1/hic/anja/tcelldev/results/hic_results/matrix/raw/TcellDev-HSC-HSPCtoTcell-Rep3_mm_hic_pe_70000.bedpe.tmp /media/rad/HDD1/hic/anja/tcelldev/results/hic_results/matrix/raw/TcellDev-HSC-HSPCtoTcell-Rep3_mm_hic_pe_70000.bedpe
 
 # Add chr to first and 4th column
+cd /media/rad/HDD1/abc/christine/pdacBatch1/hicBedpe
 awk -F'\t' -vOFS='\t' '{ $1 = "chr" $1; $4 = "chr" $4 }1' < TcellDev-CLP-HSPCtoTcell-Rep1_mm_hic_pe_70000.bedpe > TcellDev-CLP-HSPCtoTcell-Rep1_mm_hic_pe_70000_ucsc.bedpe
 
-cd /media/rad/HDD1/abc/christine/pdacBatch1/hicBedpe
+# Divide and save the individual chromosomes data to their respecitive folders
 for chrom in {1..19} X Y MT; 
 do 
   echo ${chrom}; 
