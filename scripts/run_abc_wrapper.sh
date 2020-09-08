@@ -21,16 +21,16 @@ echo "################# COMMAND LINE ARGUMENTS ######################"
 echo "
 atacPeakFile=${1:-""}
 atacBamFile=${2:-""}
-h3k27acBamFile=${2:-""}
-sampleName=${3:-""}
-outputDir=${4:-""}
+h3k27acBamFile=${3:-""}
+sampleName=${4:-""}
+outputDir=${5:-""}
 species=${6:-""}
-nStrongestPeaks=${8:-"150000"}
-hicdir=${9:-"/home/rad/users/gaurav/projects/abc/input/input/hicBedpe"}
-blacklistFile=${7:-"/home/rad/users/gaurav/projects/abc/input/reference/GRCm38-blacklist_ucsc.bed"}
-chromSizesFile=${5:-"/home/rad/users/gaurav/projects/abc/input/reference/mm10_ucsc.chromsizes"}
-genesBedFile=${9:-"/home/rad/users/gaurav/projects/abc/input/reference/mmu_GRCm38_gencode_vM24_genes_ucsc.bed"}
-jobdir=${10:-"/home/rad/users/gaurav/projects/abc"}
+nStrongestPeaks=${7:-"150000"}
+hicdir=${8:-"/home/rad/users/gaurav/projects/abc/input/input/hicBedpe"}
+blacklistFile=${9:-"/home/rad/users/gaurav/projects/abc/input/reference/GRCm38-blacklist_ucsc.bed"}
+chromSizesFile=${10:-"/home/rad/users/gaurav/projects/abc/input/reference/mm10_ucsc.chromsizes"}
+genesBedFile=${11:-"/home/rad/users/gaurav/projects/abc/input/reference/mmu_GRCm38_gencode_vM24_genes_ucsc.bed"}
+jobdir=${12:-"/home/rad/users/gaurav/projects/abc"}
 "
 echo "##########################################################"
 echo

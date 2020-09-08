@@ -78,34 +78,39 @@ cd /home/rad/users/gaurav/projects/abc
 
 
 # 1. Define candidate elemets
-# narroPeakFile='/media/rad/HDD1/atacseq/christine/ckatac/results/bwa/mergedLibrary/macs/broadPeak/53646_PPT-1_S1_R1.mLb.clN_peaks.broadPeak'
-# sortedNarroPeakFile='/media/rad/HDD1/atacseq/christine/ckatac/results/bwa/mergedLibrary/macs/broadPeak/53646_PPT-1_S1_R1.mLb.clN_peaks.broadPeak.sorted'
+# atacPeakFile='/media/rad/HDD1/atacseq/christine/ckatac/results/bwa/mergedLibrary/macs/broadPeak/53646_PPT-1_S1_R1.mLb.clN_peaks.broadPeak'
+# sortedAtacPeakFile='/media/rad/HDD1/atacseq/christine/ckatac/results/bwa/mergedLibrary/macs/broadPeak/53646_PPT-1_S1_R1.mLb.clN_peaks.broadPeak.sorted'
 # atacBamFile='/media/rad/HDD1/atacseq/christine/ckatac/results/bwa/mergedLibrary/53646_PPT-1_S1_R1.mLb.clN.sorted.bam'
-narroPeakFile='/media/rad/HDD1/atacseq/christine/ckatac/gjatac/peaks/53646_PPT-1_S1_R1_001_rmdup/macs2peaks/53646_PPT-1_S1_R1_001_rmdup_peaks.broadPeak'
-sortedNarroPeakFile="${narroPeakFile}.sorted"
-atacBamFile='/media/rad/HDD1/atacseq/christine/ckatac/gjatac/bams/trimmed/53646_PPT-1_S1_R1_001_rmdup.bam'
-sampleName="53646_PPT-1_S1_R1"
+
+# atacPeakFile='/media/rad/HDD1/atacseq/christine/ckatac/gjatac/peaks/53646_PPT-1_S1_R1_001_rmdup/macs2peaks/53646_PPT-1_S1_R1_001_rmdup_peaks.broadPeak'
+# atacBamFile='/media/rad/HDD1/atacseq/christine/ckatac/gjatac/bams/trimmed/53646_PPT-1_S1_R1_001_rmdup.bam'
+
+atacPeakFile='/media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/5320_PPT-1_005_R1.mLb.clN_peaks_ucsc.broadPeak'
+sortedAtacPeakFile="${atacPeakFile}.sorted"
+atacBamFile='/media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/5320_PPT-1_005_R1.mLb.clN.sorted_ucsc.bam'
+sampleName="5320_PPT-1_005"
 outputDir="/media/rad/HDD1/abc/christine/pdacBatch1/${sampleName}"
 chromSizesFile='/home/rad/users/gaurav/projects/abc/input/reference/mm10_ucsc.chromsizes'
 blacklistFile='/home/rad/users/gaurav/projects/abc/input/reference/GRCm38-blacklist_ucsc.bed'
 nStrongestPeaks=150000
 
 # Sort narrowPeak file
-bedtools sort -faidx ${chromSizesFile} -i ${narroPeakFile} > ${sortedNarroPeakFile}
-python scripts/ABC-Enhancer-Gene-Prediction/src/makeCandidateRegions.py --narrowPeak ${sortedNarroPeakFile} --bam ${atacBamFile} --outDir ${outputDir} --chrom_sizes ${chromSizesFile} --regions_blacklist ${blacklistFile} --peakExtendFromSummit 250 --nStrongestPeaks ${nStrongestPeaks}  --ignoreSummits
+bedtools sort -faidx ${chromSizesFile} -i ${atacPeakFile} > ${sortedAtacPeakFile}
+python scripts/ABC-Enhancer-Gene-Prediction/src/makeCandidateRegions.py --narrowPeak ${sortedAtacPeakFile} --bam ${atacBamFile} --outDir ${outputDir} --chrom_sizes ${chromSizesFile} --regions_blacklist ${blacklistFile} --peakExtendFromSummit 250 --nStrongestPeaks ${nStrongestPeaks}  --ignoreSummits
 
 # 2. Quantifying Enhancer Activity
-candidateRegionsFile=${outputDir}/$(basename ${sortedNarroPeakFile}).candidateRegions.bed
+candidateRegionsFile=${outputDir}/$(basename ${sortedAtacPeakFile}).candidateRegions.bed
 genesBedFile="input/reference/mmu_GRCm38_gencode_vM24_genes_ucsc.bed"
 outputNeighborDir="${outputDir}/${sampleName}/neighbors"
-h3k27acBamFile="/media/rad/HDD1/nfchip/christine/pdacBatch1/gjchip/mapping/pdacBatch1_20200424121526_A0000498_123abcam-53646-PPT-1_mmu_chipseq_se_R1_rmdup.bam"
+# h3k27acBamFile="/media/rad/HDD1/nfchip/christine/pdacBatch1/gjchip/mapping/pdacBatch1_20200424121526_A0000498_123abcam-53646-PPT-1_mmu_chipseq_se_R1_rmdup.bam"
+h3k27acBamFile='/media/rad/HDD1/nfchip/christine/pdacBatch1/gjchip/mapping/pdacBatch1_20200424121526_A0000498_127abcam-5320-PPT-1_mmu_chipseq_se_R1_rmdup.bam'
 python scripts/ABC-Enhancer-Gene-Prediction/src/run.neighborhoods.py --candidate_enhancer_regions ${candidateRegionsFile} --genes ${genesBedFile} --H3K27ac ${h3k27acBamFile} --DHS ${atacBamFile} --chrom_sizes ${chromSizesFile} --outdir ${outputNeighborDir}
 
 # 3. Compute ABC Scores
 enhancerList=${outputNeighborDir}/EnhancerList.txt
 geneList=${outputNeighborDir}/GeneList.txt
 outputPredictionsDir="${outputDir}/${sampleName}/predictions"
-hicdir="/media/rad/HDD1/abc/christine/pdacBatch1/hicBedpe"
+hicdir="/home/rad/users/gaurav/projects/abc/input/hicBedpe"
 # python scripts/ABC-Enhancer-Gene-Prediction/src/predict.py --enhancers ${enhancerList} --genes ${geneList} --score_column powerlaw.Score --threshold .02 --hic_resolution 5000 --outdir ${outputPredictionsDir} --make_all_putative
 python scripts/ABC-Enhancer-Gene-Prediction/src/predict.py --enhancers ${enhancerList} --genes ${geneList} --HiCdir ${hicdir} --hic_resolution 70000  --scale_hic_using_powerlaw --hic_type bedpe --threshold .02 --outdir ${outputPredictionsDir} --make_all_putative
 
