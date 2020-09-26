@@ -6,15 +6,16 @@
 atacPeakFile=${1:-""}
 atacBamFile=${2:-""}
 h3k27acBamFile=${3:-""}
-sampleName=${4:-""}
-outputDir=${5:-""}
-species=${6:-""}
-nStrongestPeaks=${7:-"150000"}
-hicdir=${8:-"/home/rad/users/gaurav/projects/abc/input/hicBedpe"}
-blacklistFile=${9:-"/home/rad/users/gaurav/projects/abc/input/reference/GRCm38-blacklist_ucsc.bed"}
-chromSizesFile=${10:-"/home/rad/users/gaurav/projects/abc/input/reference/mm10_ucsc.chromsizes"}
-genesBedFile=${11:-"/home/rad/users/gaurav/projects/abc/input/reference/mmu_GRCm38_gencode_vM24_genes_ucsc.bed"}
-jobdir=${12:-"/home/rad/users/gaurav/projects/abc"}
+countsFile=${4:-""}
+sampleName=${5:-""}
+outputDir=${6:-""}
+species=${7:-""}
+nStrongestPeaks=${8:-"150000"}
+hicdir=${9:-"/home/rad/users/gaurav/projects/abc/input/hicBedpe"}
+blacklistFile=${10:-"/home/rad/users/gaurav/projects/abc/input/reference/GRCm38-blacklist_ucsc.bed"}
+chromSizesFile=${11:-"/home/rad/users/gaurav/projects/abc/input/reference/mm10_ucsc.chromsizes"}
+genesBedFile=${12:-"/home/rad/users/gaurav/projects/abc/input/reference/mmu_GRCm38_gencode_vM24_genes_ucsc.bed"}
+jobdir=${13:-"/home/rad/users/gaurav/projects/abc"}
 
 echo
 echo "################# COMMAND LINE ARGUMENTS ######################"
@@ -22,15 +23,16 @@ echo "
 atacPeakFile=${1:-""}
 atacBamFile=${2:-""}
 h3k27acBamFile=${3:-""}
-sampleName=${4:-""}
-outputDir=${5:-""}
-species=${6:-""}
-nStrongestPeaks=${7:-"150000"}
-hicdir=${8:-"/home/rad/users/gaurav/projects/abc/input/input/hicBedpe"}
-blacklistFile=${9:-"/home/rad/users/gaurav/projects/abc/input/reference/GRCm38-blacklist_ucsc.bed"}
-chromSizesFile=${10:-"/home/rad/users/gaurav/projects/abc/input/reference/mm10_ucsc.chromsizes"}
-genesBedFile=${11:-"/home/rad/users/gaurav/projects/abc/input/reference/mmu_GRCm38_gencode_vM24_genes_ucsc.bed"}
-jobdir=${12:-"/home/rad/users/gaurav/projects/abc"}
+countsFile=${4:-""}
+sampleName=${5:-""}
+outputDir=${6:-""}
+species=${7:-""}
+nStrongestPeaks=${8:-"150000"}
+hicdir=${9:-"/home/rad/users/gaurav/projects/abc/input/input/hicBedpe"}
+blacklistFile=${10:-"/home/rad/users/gaurav/projects/abc/input/reference/GRCm38-blacklist_ucsc.bed"}
+chromSizesFile=${11:-"/home/rad/users/gaurav/projects/abc/input/reference/mm10_ucsc.chromsizes"}
+genesBedFile=${12:-"/home/rad/users/gaurav/projects/abc/input/reference/mmu_GRCm38_gencode_vM24_genes_ucsc.bed"}
+jobdir=${13:-"/home/rad/users/gaurav/projects/abc"}
 "
 echo "##########################################################"
 echo
@@ -51,7 +53,7 @@ echo
 echo "# 2. Quantifying Enhancer Activity"
 candidateRegionsFile=${outputDir}/$(basename ${sortedAtacPeakFile}).candidateRegions.bed
 outputNeighborDir="${outputDir}/${sampleName}/neighbors"
-python scripts/ABC-Enhancer-Gene-Prediction/src/run.neighborhoods.py --candidate_enhancer_regions ${candidateRegionsFile} --genes ${genesBedFile} --H3K27ac ${h3k27acBamFile} --DHS ${atacBamFile} --chrom_sizes ${chromSizesFile} --outdir ${outputNeighborDir}
+python scripts/ABC-Enhancer-Gene-Prediction/src/run.neighborhoods.py --candidate_enhancer_regions ${candidateRegionsFile} --genes ${genesBedFile} --H3K27ac ${h3k27acBamFile} --DHS ${atacBamFile} --expression_table ${countsFile} --chrom_sizes ${chromSizesFile} --outdir ${outputNeighborDir}
 echo 
 
 # 3. Compute ABC Scores
