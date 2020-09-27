@@ -55,6 +55,12 @@ done
 # 0610005C13Rik   0
 # 0610009B22Rik   44.3845881044952
 
+########################################################################################
+# RUN THE ABC PIPELINE
+########################################################################################
+
+# pwd
+cd /home/rad/users/gaurav/projects/abc
 # Define the bams and the peaks files
 sampleNames=(5320_PPT-1 5320_LungMet-1 5320_LivMet-1 5320_LivMet-3 53646_PPT-1 53646_LivMet-1 53646_LivMet-2 53646_LivMet-3)
 peaksdir="/media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc"
@@ -74,20 +80,3 @@ for ((i=0;i<${#sampleNames[@]};++i)); do
   echo "bash scripts/run_abc_wrapper.sh ${atacpeak} ${atacbam} ${h3k27acbam} ${countsfile} ${sampleNames[i]} ${outputDir} ${species}"
   bash scripts/run_abc_wrapper.sh ${atacpeak} ${atacbam} ${h3k27acbam} ${countsfile} ${sampleNames[i]} ${outputDir} ${species}
 done
-
-
-
-# atacpeaks=(/media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/5320_PPT-1_005_R1.mLb.clN_peaks_ucsc.broadPeak /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/5320_LungMet-1_005_R1.mLb.clN_peaks_ucsc.broadPeak /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/5320_LivMet-1_005_R1.mLb.clN_peaks_ucsc.broadPeak /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/5320_LivMet-3_005_R1.mLb.clN_peaks_ucsc.broadPeak /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/53646_PPT-1_005_R1.mLb.clN_peaks_ucsc.broadPeak /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/53646_LivMet-1_005_R1.mLb.clN_peaks_ucsc.broadPeak /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/53646_LivMet-2_005_R1.mLb.clN_peaks_ucsc.broadPeak /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/53646_LivMet-3_005_R1.mLb.clN_peaks_ucsc.broadPeak)
-# atacbams=(/media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/5320_PPT-1_005_R1.mLb.clN.sorted_ucsc.bam /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/5320_LungMet-1_005_R1.mLb.clN.sorted_ucsc.bam /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/5320_LivMet-1_005_R1.mLb.clN.sorted_ucsc.bam /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/5320_LivMet-3_005_R1.mLb.clN.sorted_ucsc.bam /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/53646_PPT-1_005_R1.mLb.clN.sorted_ucsc.bam /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/53646_LivMet-1_005_R1.mLb.clN.sorted_ucsc.bam /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/53646_LivMet-2_005_R1.mLb.clN.sorted_ucsc.bam /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/53646_LivMet-3_005_R1.mLb.clN.sorted_ucsc.bam)
-# countsfile=(/media/rad/HDD1/abc/christine/pdacBatch1/expression/counts/5320_LivMet-1_Counts.txt /media/rad/HDD1/abc/christine/pdacBatch1/expression/counts/5320_PPT-1_Counts.txt /media/rad/HDD1/abc/christine/pdacBatch1/expression/counts/53646_LivMet-3_Counts.txt /media/rad/HDD1/abc/christine/pdacBatch1/expression/counts/5320_LivMet-3_Counts.txt /media/rad/HDD1/abc/christine/pdacBatch1/expression/counts/53646_LivMet-1_Counts.txt /media/rad/HDD1/abc/christine/pdacBatch1/expression/counts/53646_PPT-1_Counts.txt /media/rad/HDD1/abc/christine/pdacBatch1/expression/counts/5320_LungMet-1_Counts.txt /media/rad/HDD1/abc/christine/pdacBatch1/expression/counts/53646_LivMet-2_Counts.txt)
-# # Run ABC pipeline on the above samples
-# for ((i=0;i<${#atacpeaks[@]};++i)); do
-#   echo "########################################"
-#   echo "- Running for sample: ${sampleNames[i]}"
-#   outputDir="/media/rad/HDD1/abc/christine/pdacBatch1/${sampleNames[i]}"; mkdir -p ${outputDir}
-#   echo "bash scripts/run_abc_wrapper.sh ${atacpeaks[i]} ${atacbams[i]} ${h3k27acBAMs[i]} ${sampleNames[i]} ${outputDir}"
-#   # bash scripts/run_abc_wrapper.sh ${atacpeaks[i]} ${atacbams[i]} ${h3k27acBAMs[i]} ${sampleNames[i]} ${outputDir}
-#   echo ""
-# done
-
-# # bash scripts/run_abc_wrapper.sh /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/macs/broadPeak/ucsc/5320_PPT-1_005_R1.mLb.clN_peaks_ucsc.broadPeak /media/rad/HDD1/atacseq/christine/AGRad_ATACseq_MUC001/results/bwa/mergedLibrary/ucsc/5320_PPT-1_005_R1.mLb.clN.sorted_ucsc.bam /media/rad/HDD1/nfchip/christine/pdacBatch1/gjchip/mapping/pdacBatch1_20200424121526_A0000498_127abcam-5320-PPT-1_mmu_chipseq_se_R1_rmdup.bam 5320_PPT-1 /media/rad/HDD1/abc/christine/pdacBatch1/5320_PPT-1
